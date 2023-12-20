@@ -2,6 +2,8 @@ from pathlib import Path
 import pandas as pd
 import logging, sys
 from pathlib import Path
+from typing import List
+from selenium import webdriver
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 f_hnd = logging.FileHandler(Path(__file__).parent.parent / 'logs' / 'data_ingestion.log')
@@ -9,9 +11,9 @@ s_hnd = logging.StreamHandler(sys.stdout)
 
 class DataIngestion:
     data_path: Path
-    dataset: pd.DataFrame
     data_type: str
     logger: logging.Logger
+    sources: List
 
     def __init__(self, data_path: Path):
         self.data_path = data_path
@@ -28,6 +30,11 @@ class DataIngestion:
             self.dataset = pd.read_excel(data_path)
         else:
             raise Exception('Invalid file type')
+    
+    def fetch_data_from_source(self):
+        # Load Selenium Web Driver for Edge Browser Installed on macOS
+        
+        return self.dataset
     
     def main(self):
         self.logger.info('<<<<<<<<<<<<<<<<< STAGE 1: Data ingestion Started >>>>>>>>>>>>>>>>>')

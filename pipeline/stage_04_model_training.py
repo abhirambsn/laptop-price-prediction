@@ -55,7 +55,7 @@ class ModelTrainer:
         self.logger.info(f"Best score: {best_score}")
         self.logger.info(f"Best parameters: {best_params}")
         self.logger.info(f"Saving best model according to training...")
-        dump(best_model, f"../models/best_model.joblib")
+        dump(best_model, Path(__file__).parent.parent / f"models/best_model.joblib")
     
     def evaluate(self):
         # Evaluate model on validation set
@@ -72,7 +72,7 @@ class ModelTrainer:
         # Write evaluation metrics to file
         self.logger.info('Writing evaluation metrics to file...')
         timestamp = str(pd.Timestamp.now()).replace(' ', '_').replace(':', '-')
-        with open(f'../reports/validation_metrics_{timestamp}.txt', 'w') as f:
+        with open(Path(__file__).parent.parent / f'reports/validation_metrics_{timestamp}.txt', 'w') as f:
             f.write(f'Mean Absolute Error: {mae}\n')
             f.write(f'R2: {r2}\n')
             f.write(f'Adjusted R2: {adj_r2}\n')

@@ -46,7 +46,7 @@ class ModelEvaluator:
         # Write evaluation metrics to file
         self.logger.info('Writing evaluation metrics to file...')
         timestamp = str(pd.Timestamp.now()).replace(' ', '_').replace(':', '-')
-        with open(Path(os.getcwd()).parent / f'reports/evaluation_metrics_{timestamp}.txt', 'w') as f:
+        with open(Path(__file__).parent.parent / f'reports/evaluation_metrics_{timestamp}.txt', 'w') as f:
             f.write(f'Mean Absolute Error: {mae}\n')
             f.write(f'R2: {r2}\n')
             f.write(f'Adjusted R2: {adj_r2}\n')
