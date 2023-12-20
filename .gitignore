@@ -1,0 +1,8 @@
+**/__pycache__/
+
+# Ignore __pycache__ directory in all locations
+**/__pycache__/
+reports/*
+models/*
+data/*
+logs/*
