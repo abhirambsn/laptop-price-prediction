@@ -6,3 +6,5 @@ reports/*
 models/*
 data/*
 logs/*
+
+msedgedriver

@@ -9,9 +9,13 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 
 from pathlib import Path
+import sys
 
 def main():
     print('Pipeline started...')
+    if "-i" in sys.argv:
+        data_ingestion = DataIngestion(data_path=Path(__file__).parent.parent / "data/dataset.csv", sources=['amazon', 'flipkart'])
+        data_ingestion.main()
     data_cleaning = DataCleaner(data_path=Path(__file__).parent.parent / "data/dataset_raw.csv")
     data_cleaning.main()
 
