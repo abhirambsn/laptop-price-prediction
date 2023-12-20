@@ -1,0 +1,1 @@
+mkdir data models logs reports
