@@ -1,6 +1,7 @@
 import logging
-from joblib import load
 import pandas as pd
+from joblib import load
+from forex_python.converter import CurrencyRates
 
 class Predictor:
     def __init__(self, model_path, preprocessor_path):
@@ -21,8 +22,12 @@ class Predictor:
     
         return pd.DataFrame([dict(zip(keys, sample))])
     
-    def format_prediction(self, prediction):
-        return f'{int(round(prediction[0],2)*1000):,}'
+    def format_prediction(self, prediction, currency):
+        c = CurrencyRates()
+        price = round(prediction[0],2)*1000
+        if currency != "INR":
+            price = c.convert('INR', currency, price)
+        return f'{round(price, 2):,}'
     
     def predict(self, sample):
         try:
