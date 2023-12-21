@@ -40,7 +40,7 @@ class ModelTrainer:
 
         for model_name, param_grid in self.models.items():
             self.logger.info(f"Training {model_name}...")
-            model = GridSearchCV(param_grid=param_grid[1], estimator=param_grid[0], cv=5, n_jobs=-1, verbose=3)
+            model = GridSearchCV(param_grid=param_grid[1], estimator=param_grid[0], cv=5, n_jobs=-1, verbose=1)
             model.fit(self.X_train, self.y_train)
             self.logger.info(f"Best parameters for {model_name}: {model.best_params_}")
             self.logger.info(f"Best score for {model_name}: {model.best_score_}")

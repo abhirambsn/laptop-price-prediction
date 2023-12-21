@@ -7,4 +7,5 @@ models/*
 data/*
 logs/*
 
+app/logs/*
 msedgedriver

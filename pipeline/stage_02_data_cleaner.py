@@ -230,6 +230,7 @@ class DataCleaner:
         self.dataset['USB-C'] = self.dataset['Connector Type'].apply(lambda x: 1 if 'usb-c' in x.lower() else 0)
         self.dataset['Ethernet'] = self.dataset['Connector Type'].apply(lambda x: 1 if 'ethernet' in x.lower() else 0)
         self.dataset['Thunderbolt'] = self.dataset['Connector Type'].apply(lambda x: 1 if 'thunderbolt' in x.lower() else 0)
+        self.dataset.drop('Connector Type', axis=1, inplace=True)
         self.dataset['DedicatedGraphics'] = self.dataset['Graphics Chipset Brand'].apply(lambda x: 1 if 'nvidia' in x.lower() or 'iris' in x.lower() else 0)
         self.dataset['IntegratedGraphics'] = self.dataset['Graphics Chipset Brand'].apply(lambda x: 1 if 'intel' in x.lower() or 'amd' in x.lower() or 'iris' in x.lower() or 'integrated' in x.lower() else 0)
         self.dataset.drop('Graphics Chipset Brand', axis=1, inplace=True)
@@ -254,6 +255,8 @@ class DataCleaner:
         self.dataset = self.dataset.drop('Device interface - primary', axis=1)
         self.dataset['Price'] = self.dataset['Price'].apply(self.process_price)
         self.dataset['Item Weight'] = self.dataset['Item Weight'].apply(self.process_item_weight)
+        self.dataset['Hard Drive Size'] = self.dataset['Hard Drive Size'].apply(self.process_hdd_size)
+        self.dataset['GraphicsCardRAM'] = self.dataset['GraphicsCardRAM'].apply(self.process_graphics_ram)
         self.logger.info("Data Processed")
 
         self.logger.info("Saving Cleaned Data")

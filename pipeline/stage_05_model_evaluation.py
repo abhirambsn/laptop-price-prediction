@@ -1,5 +1,5 @@
 from joblib import load
-import logging, sys, os
+import logging, sys, os, shutil
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -52,10 +52,16 @@ class ModelEvaluator:
             f.write(f'Adjusted R2: {adj_r2}\n')
         self.logger.info('Model evaluation completed.')
     
+    def copy_to_production(self):
+        self.logger.info('Copying model to production...')
+        shutil.copytree(Path(__file__).parent.parent / 'models', Path(__file__).parent.parent / 'app/models', symlinks=True, dirs_exist_ok=True)
+        self.logger.info('Model copied to production.')
+    
     def main(self):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(f_hnd)
         self.logger.addHandler(s_hnd)
         self.logger.info('<<<<<<<<<<<<<<<<< STAGE 5: Model Evaluation Started >>>>>>>>>>>>>>>>>')
         self.evaluate()
+        self.copy_to_production()
         self.logger.info('<<<<<<<<<<<<<<<<< STAGE 5: Model Evaluation Completed >>>>>>>>>>>>>>>>>')

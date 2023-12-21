@@ -1,1 +1,1 @@
-mkdir data models logs reports
+mkdir data models logs reports app/logs
