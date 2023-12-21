@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pathlib import Path
-from utils import Predictor
+from utils import predict_price
 import logging
 
 log_path = Path(__file__).parent / 'logs' / 'app.log'
-model_path = Path(__file__).parent.parent / 'models' / 'best_model.joblib'
-preprocessor_path = Path(__file__).parent.parent / 'models' / 'preprocessor.joblib'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,12 +24,14 @@ def health():
 @app.route(f"{base_path}/predict", methods=["POST"])
 def predict():
     data = request.get_json()
+    args = request.args
+    currency = args.get("currency", "INR")
     try:
         logger.info(f"Received data: {data.values()}")
-        predictor = Predictor(model_path, preprocessor_path)
-        prediction = predictor.predict(data.values())
-        logger.info(f"Prediction: {prediction}")
-        return jsonify({"price": predictor.format_prediction(prediction)}), 200
+        logger.info(f"Predicting Price for {data['Product Name']} in Currency {currency}")
+        prediction = predict_price(data, currency)
+        logger.info(f"Prediction: {prediction} {currency}")
+        return jsonify({"price": prediction, "currency": currency}), 200
     except Exception as e:
         logger.error(f"Failed to predict: {e}")
         return jsonify({"error": "Failed to predict"}), 500
